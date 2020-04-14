@@ -68,8 +68,7 @@ def validate_move(your_body, next_move):
     current_head = your_body[0]
 
     safe_wall = avoid_walls(current_head, next_move)
-    safe_body = True
-    # safe_body = stop_hitting_yourself(your_body, next_move)
+    safe_body = stop_hitting_yourself(your_body, next_move)
 
     is_safe = safe_wall and safe_body
 
