@@ -49,7 +49,8 @@ class Battlesnake(object):
         data = cherrypy.request.json
 
         # Data structure holds head, body, then tail
-        body = data["you"]["body"]
+        your_body = data["you"]["body"]
+        snakes = data["board"]["snakes"]
         print(f"Data in move is: {data}")
 
         # Choose a random direction to move in
@@ -58,7 +59,7 @@ class Battlesnake(object):
         for _ in range(10):
             # Max out at 10 tries to avoid infinite loops. :P
             move = random.choice(possible_moves)
-            safe = strategy.validate_move(body, move)
+            safe = strategy.validate_move(your_body, snakes, move)
             if safe:
                 break
 

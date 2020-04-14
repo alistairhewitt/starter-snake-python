@@ -38,23 +38,39 @@ def avoid_wall(future_head):
     return result
 
 
-def avoid_self(future_head, your_body):
+def avoid_snakes(future_head, snake_bodies):
     """
-    Return True if the proposed move avoids running into yourself, false if you
-    will totally run into yourself.
+    Return True of the proposed move avoids running into any list of snakes,
+    False if the next move exists in a snake body square.
 
-    TODO - this is basic, I probably want to add later a check for the tail, if
-    you are about to eat food, and now you are going to get longer.
+    Recommend taking the default data from the board snakes as per the battlesnake
+    API. Note that the list of board snakes includes yourself!
+
+    TODO - this is basic, may want to add in a check to see if any heads are
+    about to eat food, and may extend by a square! Does the tail grow first,
+    or does the head grow? Find out what happens in the game and see if we need
+    to check for if a snake suddenly grows.
+
+    TODO - what about snake tails leaving in the next move? A tail may be a
+    safe place to move into (assuming no food as in above scenario). In which
+    case, this logic needs to be modified to exclude the tail, as that is a safe
+    square to move into. LOOK INTO THIS LATER when implementing chicken snake
+    approach, as that is a key concept with that!
+
+    @:param: snake_bodies list of dictionary of snake bodies
+
+       [ {'id': 'abc', 'name': 'Snek' ... 'body': [{'x': 1, 'y': 2}, {'x': 1, 'y': 3}, {'x': 1, 'y': 4}]},
+         {'id': 'efg', 'name': 'SNAKE' ...'body': [{'x': 4, 'y': 2}, {'x': 4, 'y': 3}, {'x': 4, 'y': 4}]},
+         {'id': 'hij', 'name': 'you' ...'body': [{'x': 1, 'y': 10}, {'x': 1, 'y': 9}, {'x': 1, 'y': 8}]}
+        ]
     """
-    result = True
-
-    if future_head in your_body:
-        result = False
-
-    return result
+    for snake in snake_bodies:
+        if future_head in snake["body"]:
+            return False
+    return True
 
 
-def validate_move(your_body, next_move):
+def validate_move(your_body, snakes, next_move):
     """
     Basic set of logical checks that only prevent disaster. This function is not
     responsible for picking a move, it is responsible for saying if that move
@@ -66,7 +82,7 @@ def validate_move(your_body, next_move):
     print(f"Future head on a {next_move} is as follows: {future_head}")
 
     safe_wall = avoid_wall(future_head)
-    safe_body = avoid_self(future_head, your_body)
+    safe_body = avoid_snakes(future_head, snakes)
 
     print(f"future_head {future_head}: safe_wall {safe_wall}, safe_body {safe_body}")
     is_safe = safe_wall and safe_body
