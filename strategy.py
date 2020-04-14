@@ -47,6 +47,10 @@ def avoid_self(future_head, your_body):
     """
     result = True
 
+    print(your_body)
+    print(type(your_body), type(your_body[0]))
+    print(future_head)
+    print(type(future_head))
     if future_head in your_body:
         result = False
 
