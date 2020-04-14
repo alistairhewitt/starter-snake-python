@@ -3,10 +3,14 @@ import random
 
 import cherrypy
 
+import global_variables
+import strategy
+
 """
 This is a simple Battlesnake server written in Python.
 For instructions see https://github.com/BattlesnakeOfficial/starter-snake-python/README.md
 """
+
 
 
 class Battlesnake(object):
@@ -24,8 +28,14 @@ class Battlesnake(object):
     @cherrypy.tools.json_in()
     @cherrypy.tools.json_out()
     def start(self):
+        """
+        Treat this as game initialization - should only set global_variables
+        here - could be dangerous elsewhere! Don't want to confuse myself.
+        """
         data = cherrypy.request.json
-        print(f"~~  START NEW GAME ~~~{data['game']['id'])}")
+        print(f"~~  START NEW GAME ~~~{data['game']['id']}")
+        global_variables.BOARD_MAXIMUM_X = data["board"]["width"]
+        global_variables.BOARD_MAXIMUM_Y = data["board"]["height"]
 
         return {"color": "#736CCB", "headType": "pixel", "tailType": "pixel"}
 
@@ -37,11 +47,16 @@ class Battlesnake(object):
         # Valid moves are "up", "down", "left", or "right".
         # TODO: Use the information in cherrypy.request.json to decide your next move.
         data = cherrypy.request.json
+        current_head = data["you"]["body"][1]
         print(f"Data in move is: {data}")
 
         # Choose a random direction to move in
         possible_moves = ["up", "down", "left", "right"]
         move = random.choice(possible_moves)
+
+        while strategy.avoid_walls(current_head, move) is not True:
+            move = random.choice(possible_moves)
+
 
         print(f"MOVE: {move}")
 
