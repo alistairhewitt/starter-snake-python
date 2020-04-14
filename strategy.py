@@ -11,7 +11,8 @@ def _predict_future_position(current_head, next_move):
     Given the current snake head position, and a proposed move,
     returns what the new snake head position would be.
     """
-    future_head = current_head
+    # Get a clean copy, otherwise will modify the current head!
+    future_head = current_head.copy()
 
     if next_move in ["left", "right"]:
         # moving left means decreasing x by 1, right increase by 1
@@ -47,10 +48,6 @@ def avoid_self(future_head, your_body):
     """
     result = True
 
-    print(your_body)
-    print(type(your_body), type(your_body[0]))
-    print(future_head)
-    print(type(future_head))
     if future_head in your_body:
         result = False
 
