@@ -55,7 +55,7 @@ class Battlesnake(object):
         possible_moves = ["up", "down", "left", "right"]
         move = random.choice(possible_moves)
 
-        while strategy.validate_move(body, move) is not True:
+        while strategy.avoid_walls(body, move) is not True:
             move = random.choice(possible_moves)
 
         print(f"FINAL MOVE: {move}")
