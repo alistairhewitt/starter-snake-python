@@ -48,32 +48,17 @@ class Battlesnake(object):
         data = cherrypy.request.json
 
         # Data structure holds head, body, then tail
-        # current_head = data["you"]["body"][0]
-        # print(f"Data in move is: {data}")
-        #
-        # # Choose a random direction to move in
-        # possible_moves = ["up", "down", "left", "right"]
-        # move = random.choice(possible_moves)
-        #
-        # while strategy.avoid_walls(current_head, move) is not True:
-        #     move = random.choice(possible_moves)
-        #
-        # print(f"MOVE: {move}")
+        current_head = data["you"]["body"][0]
+        print(f"Data in move is: {data}")
 
-        ## Sanity check - which way is left/right/up/down?!?
-        if data["turn"] == 0 or data["turn"] == 1:
-            move = "up"
+        # Choose a random direction to move in
+        possible_moves = ["up", "down", "left", "right"]
+        move = random.choice(possible_moves)
 
-        elif data["turn"] == 2 or data["turn"] == 3:
-            move = "left"
+        while strategy.avoid_walls(current_head, move) is not True:
+            move = random.choice(possible_moves)
 
-        elif data["turn"] == 4 or data["turn"] == 5:
-            move = "down"
-
-        elif data["turn"] == 6 or data["turn"] == 7:
-            move = "right"
-        else:
-            move = "up"
+        print(f"MOVE: {move}")
 
         return {"move": move, "shout": "Urrah!"}
 
