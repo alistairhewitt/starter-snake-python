@@ -12,7 +12,6 @@ For instructions see https://github.com/BattlesnakeOfficial/starter-snake-python
 """
 
 
-
 class Battlesnake(object):
     @cherrypy.expose
     def index(self):
@@ -47,18 +46,34 @@ class Battlesnake(object):
         # Valid moves are "up", "down", "left", or "right".
         # TODO: Use the information in cherrypy.request.json to decide your next move.
         data = cherrypy.request.json
-        current_head = data["you"]["body"][1]
-        print(f"Data in move is: {data}")
 
-        # Choose a random direction to move in
-        possible_moves = ["up", "down", "left", "right"]
-        move = random.choice(possible_moves)
+        # Data structure holds head, body, then tail
+        # current_head = data["you"]["body"][0]
+        # print(f"Data in move is: {data}")
+        #
+        # # Choose a random direction to move in
+        # possible_moves = ["up", "down", "left", "right"]
+        # move = random.choice(possible_moves)
+        #
+        # while strategy.avoid_walls(current_head, move) is not True:
+        #     move = random.choice(possible_moves)
+        #
+        # print(f"MOVE: {move}")
 
-        while strategy.avoid_walls(current_head, move) is not True:
-            move = random.choice(possible_moves)
+        ## Sanity check - which way is left/right/up/down?!?
+        if data["turn"] == 0 or data["turn"] == 1:
+            move = "up"
 
+        elif data["turn"] == 2 or data["turn"] == 3:
+            move = "left"
 
-        print(f"MOVE: {move}")
+        elif data["turn"] == 4 or data["turn"] == 5:
+            move = "down"
+
+        elif data["turn"] == 6 or data["turn"] == 7:
+            move = "right"
+        else:
+            move = "up"
 
         return {"move": move, "shout": "Urrah!"}
 
