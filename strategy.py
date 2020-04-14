@@ -22,26 +22,22 @@ def _predict_future_position(current_head, next_move):
     return future_head
 
 
-def avoid_walls(current_head, next_move):
+def avoid_wall(future_head):
     """
-    Return True if the proposed move avoids a wall, False if it means you will
-    hit a wall.
+    Return True if the proposed future_head avoids a wall, False if it means
+    you will hit a wall.
     """
     result = True
-
-    future_head = _predict_future_position(current_head, next_move)
-    print(f"Future head on a {next_move} is as follows: {future_head}")
 
     x = int(future_head["x"])
     y = int(future_head["y"])
 
     if x < 0 or y < 0 or x > var.BOARD_MAXIMUM_X or y > var.BOARD_MAXIMUM_Y:
         result = False
-    print(f"Future head will NOT result in a wall collision? {result}")
     return result
 
 
-def stop_hitting_yourself(your_body, next_move):
+def avoid_self(future_head, your_body):
     """
     Return True if the proposed move avoids running into yourself, false if you
     will totally run into yourself.
@@ -50,7 +46,6 @@ def stop_hitting_yourself(your_body, next_move):
     you are about to eat food, and now you are going to get longer.
     """
     result = True
-    future_head = _predict_future_position(your_body[0], next_move)
 
     if future_head in your_body:
         result = False
@@ -66,10 +61,13 @@ def validate_move(your_body, next_move):
     Return True if safe, False if not (and another move is needed).
     """
     current_head = your_body[0]
+    future_head = _predict_future_position(current_head, next_move)
+    print(f"Future head on a {next_move} is as follows: {future_head}")
 
-    safe_wall = avoid_walls(current_head, next_move)
-    safe_body = stop_hitting_yourself(your_body, next_move)
+    safe_wall = avoid_wall(future_head)
+    safe_body = avoid_self(future_head, your_body)
 
+    print(f"future_head {future_head}: safe_wall {safe_wall}, safe_body {safe_body}")
     is_safe = safe_wall and safe_body
 
     return is_safe
