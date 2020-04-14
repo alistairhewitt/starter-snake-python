@@ -33,8 +33,9 @@ class Battlesnake(object):
         """
         data = cherrypy.request.json
         print(f"~~  START NEW GAME ~~~{data['game']['id']}")
-        global_variables.BOARD_MAXIMUM_X = data["board"]["width"]
-        global_variables.BOARD_MAXIMUM_Y = data["board"]["height"]
+        # maximum x and y coordinates are one less than the size (zero index)
+        global_variables.BOARD_MAXIMUM_X = data["board"]["width"] - 1
+        global_variables.BOARD_MAXIMUM_Y = data["board"]["height"] - 1
 
         return {"color": "#736CCB", "headType": "pixel", "tailType": "pixel"}
 
