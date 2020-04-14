@@ -53,10 +53,13 @@ class Battlesnake(object):
 
         # Choose a random direction to move in
         possible_moves = ["up", "down", "left", "right"]
-        move = random.choice(possible_moves)
 
-        while strategy.avoid_walls(body, move) is not True:
+        for _ in range(10):
+            # Max out at 10 tries to avoid infinite loops. :P
             move = random.choice(possible_moves)
+            safe = strategy.validate_move(body, move)
+            if safe:
+                break
 
         print(f"FINAL MOVE: {move}")
 
