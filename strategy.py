@@ -35,7 +35,7 @@ def avoid_walls(current_head, next_move):
     result = True
 
     future_head = _predict_future_position(current_head, next_move)
-    print(f"Future head on a {next_move} is as follows: {future_head}")
+    # print(f"Future head on a {next_move} is as follows: {future_head}")
 
     x = int(future_head["x"])
     y = int(future_head["y"])
@@ -47,5 +47,38 @@ def avoid_walls(current_head, next_move):
     elif y > global_variables.BOARD_MAXIMUM_Y:
         result = False
 
-    print(f"Future head will NOT result in a wall collision? {result}")
+    # print(f"Future head will NOT result in a wall collision? {result}")
     return result
+
+
+def stop_hitting_yourself(your_body, next_move):
+    """
+    Return True if the proposed move avoids running into yourself, false if you
+    will totally run into yourself.
+
+    TODO - this is basic, I probably want to add later a check for the tail, if
+    you are about to eat food, and now you are going to get longer.
+    """
+    result = True
+    future_head = _predict_future_position(your_body[0], next_move)
+
+    if future_head in your_body:
+        result = False
+
+    return result
+
+
+def validate_move(your_body, next_move):
+    """
+    Basic set of logical checks that only prevent disaster. This function is not
+    responsible for picking a move, it is responsible for saying if that move
+    if safe.
+    Return True if safe, False if not (and another move is needed).
+    """
+    current_head = your_body[0]
+
+    safe_wall = avoid_walls(current_head, next_move)
+    safe_body = stop_hitting_yourself(your_body, next_move)
+
+    is_safe = safe_wall and safe_body
+    return is_safe
