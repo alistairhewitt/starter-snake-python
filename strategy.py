@@ -19,11 +19,11 @@ def _predict_future_position(current_head, next_move):
         # moving right means increasing x by 1
         future_head["x"] = future_head["x"] + 1
     elif next_move == "up":
-        # moving up means increasing Y by 1
-        future_head["y"] = future_head["y"] + 1
-    elif next_move == "down":
-        # moving down means decreasing Y by 1
+        # moving up means decreasing Y by 1
         future_head["y"] = future_head["y"] - 1
+    elif next_move == "down":
+        # moving down means increasing Y by 1
+        future_head["y"] = future_head["y"] + 1
     return future_head
 
 
@@ -35,7 +35,7 @@ def avoid_walls(current_head, next_move):
     result = True
 
     future_head = _predict_future_position(current_head, next_move)
-    print(f"Future head is as follows: {future_head}")
+    print(f"Future head on a {next_move} is as follows: {future_head}")
 
     if future_head["x"] < 0 or future_head["y"] < 0:
         result = False
