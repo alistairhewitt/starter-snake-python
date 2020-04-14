@@ -58,7 +58,7 @@ class Battlesnake(object):
         while strategy.validate_move(body, move) is not True:
             move = random.choice(possible_moves)
 
-        print(f"MOVE: {move}")
+        print(f"FINAL MOVE: {move}")
 
         return {"move": move, "shout": "Urrah!"}
 
