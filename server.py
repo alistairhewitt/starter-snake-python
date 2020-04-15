@@ -1,5 +1,4 @@
 import os
-import random
 
 import cherrypy
 
@@ -53,12 +52,9 @@ class Battlesnake(object):
         snakes = data["board"]["snakes"]
         print(f"Data in move is: {data}")
 
-        # Choose a random direction to move in
-        possible_moves = ["up", "down", "left", "right"]
-
-        for _ in range(10):
-            # Max out at 10 tries to avoid infinite loops. :P
-            move = random.choice(possible_moves)
+        while True:
+            # Max out at 50 tries to avoid infinite loops. :P
+            move = strategy.choose_move_chaos(data)
             safe = strategy.validate_move(your_body, snakes, move)
             if safe:
                 break

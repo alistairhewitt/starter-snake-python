@@ -2,6 +2,7 @@
 Home to hold my various experimental strategy code and appraoches. To be
 used by the server.py code
 """
+import random
 
 import global_variables as var
 
@@ -57,6 +58,10 @@ def avoid_snakes(future_head, snake_bodies):
     square to move into. LOOK INTO THIS LATER when implementing chicken snake
     approach, as that is a key concept with that!
 
+    TODO - and on that note, what about anticipating another snakes head, and
+    if you are destined to occupy the same square another snake is about to?
+    That might be logic for somwhere else - I'll have to think about that.
+
     @:param: snake_bodies list of dictionary of snake bodies
 
        [ {'id': 'abc', 'name': 'Snek' ... 'body': [{'x': 1, 'y': 2}, {'x': 1, 'y': 3}, {'x': 1, 'y': 4}]},
@@ -88,3 +93,16 @@ def validate_move(your_body, snakes, next_move):
     is_safe = safe_wall and safe_body
 
     return is_safe
+
+
+def choose_move_chaos(data):
+    """
+    The chaos strategy relies on randomly choosing a next move, any move, to
+    keep the competition guessing!
+
+    return a potential future_head of the snake as a dict {'x': 1, 'y': 1}
+    """
+    possible_moves = ["up", "down", "left", "right"]
+
+    move = random.choice(possible_moves)
+    return move
