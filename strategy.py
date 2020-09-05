@@ -64,9 +64,9 @@ def avoid_snakes(future_head, snake_bodies):
 
     @:param: snake_bodies list of dictionary of snake bodies
 
-       [ {'id': 'abc', 'name': 'Snek' ... 'body': [{'x': 1, 'y': 2}, {'x': 1, 'y': 3}, {'x': 1, 'y': 4}]},
-         {'id': 'efg', 'name': 'SNAKE' ...'body': [{'x': 4, 'y': 2}, {'x': 4, 'y': 3}, {'x': 4, 'y': 4}]},
-         {'id': 'hij', 'name': 'you' ...'body': [{'x': 1, 'y': 10}, {'x': 1, 'y': 9}, {'x': 1, 'y': 8}]}
+       [ {'id': 'a', 'name': 'Snek', 'health': 42, 'body': [{'x': 1, 'y': 2}, {'x': 1, 'y': 3}, {'x': 1, 'y': 4}], 'head': {'x': 1, 'y': 2}, 'length': 3, 'shout': "ah!", 'squad': "1"],
+         {'id': 'b', 'name': 'SNAKE' 'health': 42, 'body': [{'x': 4, 'y': 2}, {'x': 4, 'y': 3}, {'x': 4, 'y': 4}], 'head': {'x': 4, 'y': 3}, 'length': 3, 'shout': "ah!", 'squad': "2"],
+         {'id': 'c', 'name': 'you' 'health': 42, 'body': [{'x': 1, 'y': 10}, {'x': 1, 'y': 9}, {'x': 1, 'y': 8}], 'head': {'x': 1, 'y': 9}, 'length': 3, 'shout': "ah!", 'squad': "3"]
         ]
     """
     for snake in snake_bodies:

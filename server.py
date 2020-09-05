@@ -20,7 +20,7 @@ class Battlesnake(object):
         # TIP: If you open your Battlesnake URL in browser you should see this data
         return {
             "apiversion": "1",
-            "author": "HermitColony",
+            "author": "aurorawalker",
             "color": "#736CCB",
             "head": "pixel",
             "tail": "pixel",
@@ -32,6 +32,12 @@ class Battlesnake(object):
         """
         Treat this as game initialization - should only set global_variables
         here - could be dangerous elsewhere! Don't want to confuse myself.
+
+        { "game":  { "id":  "unique-game-id", "timeout" : 500 }
+          "turn": 123
+          "board": "height": 1, "width", 1, "food": [ ], "hazards": [ ], "snakes" : [ ],
+          "you": { }
+
         """
         data = cherrypy.request.json
 
@@ -39,6 +45,7 @@ class Battlesnake(object):
         # maximum x and y coordinates are one less than the size (zero index)
         global_variables.BOARD_MAXIMUM_X = data["board"]["width"] - 1
         global_variables.BOARD_MAXIMUM_Y = data["board"]["height"] - 1
+        global_variables.GAME_ON = True
 
         print("START")
         return "ok"
@@ -49,16 +56,16 @@ class Battlesnake(object):
     def move(self):
         # This function is called on every turn of a game. It's how your snake decides where to move.
         # Valid moves are "up", "down", "left", or "right".
-        # TODO: Use the information in cherrypy.request.json to decide your next move.
+
         data = cherrypy.request.json
 
         # Data structure holds head, body, then tail
+        your_health = data["you"]["health"]
         your_body = data["you"]["body"]
         snakes = data["board"]["snakes"]
         print(f"Data in move is: {data}")
 
-        while True:
-            # Max out at 50 tries to avoid infinite loops. :P
+        while global_variables.GAME_ON and your_health > 0:
             move = strategy.choose_move_chaos(data)
             safe = strategy.validate_move(your_body, snakes, move)
             if safe:
@@ -74,6 +81,8 @@ class Battlesnake(object):
         # This function is called when a game your snake was in ends.
         # It's purely for informational purposes, you don't have to make any decisions here.
         data = cherrypy.request.json
+
+        global_variables.GAME_ON = False
 
         print("~~~~ END GAME ~~~~")
         return "ok"
