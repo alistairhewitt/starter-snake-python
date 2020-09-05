@@ -19,7 +19,7 @@ def _predict_future_position(current_head, next_move):
         # moving left means decreasing x by 1, right increase by 1
         future_head["x"] = current_head["x"] + var.MOVE_LOOKUP[next_move]
     elif next_move in ["up", "down"]:
-        # moving up means decreasing y by 1, down increase by 1
+        # moving up means increasing y by 1, down decrease by 1
         future_head["y"] = current_head["y"] + var.MOVE_LOOKUP[next_move]
     return future_head
 

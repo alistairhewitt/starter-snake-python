@@ -15,4 +15,4 @@ BOARD_MAXIMUM_X = 0
 BOARD_MAXIMUM_Y = 0
 
 # Use a dictionary to avoid if/else when determining the change in position
-MOVE_LOOKUP = {"left": -1, "right": 1, "up": -1, "down": 1}
+MOVE_LOOKUP = {"left": -1, "right": 1, "up": 1, "down": -1}
