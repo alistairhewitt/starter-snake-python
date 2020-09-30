@@ -14,18 +14,21 @@ For instructions see https://github.com/BattlesnakeOfficial/starter-snake-python
 
 class Battlesnake(object):
     @cherrypy.expose
+    @cherrypy.tools.json_out()
     def index(self):
-        # If you open your snake URL in a browser you should see this message.
-        return "Your Battlesnake is alive!"
-
-    @cherrypy.expose
-    def ping(self):
-        # The Battlesnake engine calls this function to make sure your snake is working.
-        return "pong"
+        # This function is called when you register your Battlesnake on play.battlesnake.com
+        # It controls your Battlesnake appearance and author permissions.
+        # TIP: If you open your Battlesnake URL in browser you should see this data
+        return {
+            "apiversion": "1",
+            "author": "aurorawalker",
+            "color": "#736CCB",
+            "head": "pixel",
+            "tail": "pixel",
+        }
 
     @cherrypy.expose
     @cherrypy.tools.json_in()
-    @cherrypy.tools.json_out()
     def start(self):
         """
         Treat this as game initialization - should only set global_variables
@@ -37,7 +40,7 @@ class Battlesnake(object):
         global_variables.BOARD_MAXIMUM_X = data["board"]["width"] - 1
         global_variables.BOARD_MAXIMUM_Y = data["board"]["height"] - 1
 
-        return {"color": "#736CCB", "headType": "pixel", "tailType": "pixel"}
+        return "ok"
 
     @cherrypy.expose
     @cherrypy.tools.json_in()
