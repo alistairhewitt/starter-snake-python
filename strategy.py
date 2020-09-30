@@ -13,17 +13,17 @@ def _predict_future_position(current_head, next_move):
     """
     future_head = current_head
     if next_move == "left":
-        # moving left means decreasing x by 1
-        future_head["x"] = current_head["x"] - 1
-    elif next_move == "right":
-        # moving right means increasing x by 1
+        # moving left means increasing x by 1
         future_head["x"] = current_head["x"] + 1
+    elif next_move == "right":
+        # moving right means decreasing x by 1
+        future_head["x"] = current_head["x"] - 1
     elif next_move == "up":
-        # moving up means decreasing Y by 1
-        future_head["y"] = current_head["y"] - 1
-    elif next_move == "down":
-        # moving down means increasing Y by 1
+        # moving up means increasing Y by 1
         future_head["y"] = current_head["y"] + 1
+    elif next_move == "down":
+        # moving down means decreasing Y by 1
+        future_head["y"] = current_head["y"] - 1
     return future_head
 
 
